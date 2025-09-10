@@ -25,7 +25,9 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "http://localhost:5174"
+      "http://localhost:5174",
+      "https://escort-app-0p4c.onrender.com"
+      
     ], 
     credentials: true, 
   })
