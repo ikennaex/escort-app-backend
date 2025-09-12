@@ -1,7 +1,7 @@
-const EscortModel = require("../../models/Escort");
+const EscortModel = require("../../../models/Escort");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
-const sendVerificationMail = require("../../utils/emails/verificationEmail");
+const sendVerificationMail = require("../../../utils/emails/verificationEmail");
 
 const escortRegister = async (req, res) => {
   try {

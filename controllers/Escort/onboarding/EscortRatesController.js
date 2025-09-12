@@ -1,4 +1,4 @@
-const EscortModel = require("../../models/Escort");
+const EscortModel = require("../../../models/Escort");
 
 const escortRates = async (req, res) => {
   try {

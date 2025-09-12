@@ -6,28 +6,65 @@ const jwt = require("jsonwebtoken");
 const login = async (req, res) => {
   const { identifier, password } = req.body;
 
-  let user = await EscortModel.findOne({ $or: [{ email: identifier }, { username: identifier }] }).select("+password");
+  let user = await EscortModel.findOne({
+    $or: [{ email: identifier }, { username: identifier }],
+  }).select("+password");
   let userType = "escort";
 
   if (!user) {
-    user = await ClientModel.findOne({ $or: [{ email: identifier }, { username: identifier }] });
+    user = await ClientModel.findOne({
+      $or: [{ email: identifier }, { username: identifier }],
+    }).select("+password");
     userType = "client";
   }
 
-  if (!user) return res.status(404).json({ message: "Email or Username not found" });
+  if (!user)
+    return res.status(404).json({ message: "Email or Username not found" });
 
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) return res.status(401).json({ message: "Incorrect Password" });
 
   const accessToken = jwt.sign(
-    { id: user._id, userType },  // userType added to payload
+    { id: user._id, userType }, // userType added to payload
     process.env.JWT_ACCESS_SECRET,
     { expiresIn: "15m" }
   );
 
-  res.json({ message: "Login successful", accessToken, userType });
-};
+  const refreshToken = jwt.sign(
+    { id: user._id, userType },
+    process.env.JWT_REFRESH_SECRET,
+    { expiresIn: "7d" }
+  );
 
+  // Save refresh token in DB
+  user.refreshToken = refreshToken; // if user is escort saves in escort model, if user is client saves in client model
+  await user.save();
+
+  // Send refresh token in HttpOnly cookie
+  res.cookie("refreshToken", refreshToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+    path: "/",
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+  });
+
+  const safeUser = {
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    role: user.role,
+    createdAt: user.createdAt,
+    updatedAt: user.updatedAt,
+  };
+
+  res.json({
+    message: "Login successful",
+    accessToken,
+    userType,
+    user: safeUser,
+  });
+};
 
 const logout = async (req, res) => {
   try {
@@ -54,6 +91,5 @@ const logout = async (req, res) => {
     res.status(500).json({ message: "Logout failed" });
   }
 };
-
 
 module.exports = { login, logout };

@@ -10,6 +10,9 @@ const loginRoute = require("./routes/LoginRoute");
 const escortDetailsRoute = require("./routes/EscortDetailsRoute");
 const escortServicesRoute = require("./routes/EscortServicesRoute");
 const escortRatesRoute = require("./routes/EscortRatesRoute");
+const escortGalleryRoute = require("./routes/EscortGalleryRoute");
+const escortVerificationRoute = require("./routes/EscortVerificationRoute");
+const fetchEscortsRoute = require("./routes/FetchEscortsRoute");
 
 require('dotenv').config();
 
@@ -41,6 +44,11 @@ app.use("/auth", loginRoute);
 app.use("/escortdetails", escortDetailsRoute);
 app.use("/escortservices", escortServicesRoute);
 app.use("/escortrates", escortRatesRoute);
+app.use("/escortgallery", escortGalleryRoute);  
+app.use("/escortverification", escortVerificationRoute);  
+
+// fetch escorts
+app.use("/escorts", fetchEscortsRoute);  
 
 // run server
 app.listen(port, () => {

@@ -6,6 +6,7 @@ const clientSchema = new Schema({
   email: { type: String, required: true, unique: true, index: true },
   phoneNumber: { type: String, unique: true, index: true },
   password: { type: String, required: true, select: false },
+  refreshToken: { type: String, select: false },
 }, { timestamps: true });
 
 const ClientModel = mongooose.model("Client", clientSchema);
