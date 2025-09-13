@@ -21,7 +21,7 @@ const getEscorts = async (req, res) => {
       filter.name = { $regex: req.query.name, $options: "i" };
     }
 
-    const escortDoc = await EscortModel.find().skip(skip).limit(limit);
+    const escortDoc = await EscortModel.find({ isActive: true }).skip(skip).limit(limit);
 
     // get total count (for frontend to know how many pages exist)
     const total = await EscortModel.countDocuments();
@@ -37,4 +37,21 @@ const getEscorts = async (req, res) => {
   }
 };
 
-module.exports = { getEscorts };
+const getEscortsById = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const escortDoc = await EscortModel.findById(id);
+
+    if (!escortDoc) {
+      return res.status(404).json({ message: "Escort not found" });
+    }
+
+    res.status(200).json(escortDoc);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Error getting escort details", err: err.message });
+  }
+};
+
+module.exports = { getEscorts, getEscortsById };
