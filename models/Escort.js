@@ -9,6 +9,7 @@ const EscortSchema = new Schema(
     phoneNumber: { type: String, required: true, unique: true, index: true },
     displayName: { type: String, required: true }, 
     country: { type: String, required: true },
+    countryCode: { type: Number, required: true },
     state: { type: String, required: true },
     city: { type: String, required: true },
     dob: { type: Date, required: true },

@@ -6,12 +6,11 @@ const getLoggedUserProfile = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    const { password, ...safeUser } = user.toObject();
-    res.status(200).json(safeUser);
+    res.status(200).json(user);
   } catch (error) {
     console.error("Error fetching user profile:", error);
     res.status(500).json({ message: "Error fetching user profile" });
   }
 };
 
-module.exports = {getLoggedUserProfile}
+module.exports = { getLoggedUserProfile };
