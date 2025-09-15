@@ -4,5 +4,6 @@ const { postBankDetails } = require('../controllers/Escort/EscortBankDetailsCont
 const router = express.Router()
 
 router.patch('/', authToken, postBankDetails);
+router.get('/', authToken, postBankDetails);
 
 module.exports = router 

@@ -7,7 +7,7 @@ const postBankDetails = async (req, res) => {
 
     const escortDoc = await EscortModel.findByIdAndUpdate(
       id,
-      { $set: formData },
+      { $set: bankDetails },
       { new: true, runValidators: true }
     );
 
@@ -22,5 +22,9 @@ const postBankDetails = async (req, res) => {
       .json({ message: "Could not update escort bank record", error: err.message });
   }
 };
+
+const getBankDetails = async (req, res) => {
+
+}
 
 module.exports = {postBankDetails}
