@@ -37,7 +37,7 @@ const getEscorts = async (req, res) => {
   }
 };
 
-const getEscortsById = async (req, res) => {
+const egetEscortsById = async (req, res) => {
   const { id } = req.params;
 
   try {

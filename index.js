@@ -13,6 +13,7 @@ const escortRatesRoute = require("./routes/EscortRatesRoute");
 const escortGalleryRoute = require("./routes/EscortGalleryRoute");
 const escortVerificationRoute = require("./routes/EscortVerificationRoute");
 const fetchEscortsRoute = require("./routes/FetchEscortsRoute");
+const editEscortProfileRoute = require("./routes/EditEscortProfileRoute");
 
 require('dotenv').config();
 
@@ -46,6 +47,9 @@ app.use("/escortservices", escortServicesRoute);
 app.use("/escortrates", escortRatesRoute);
 app.use("/escortgallery", escortGalleryRoute);  
 app.use("/escortverification", escortVerificationRoute);  
+
+// edit route for escort
+app.use("/escorts/edit", editEscortProfileRoute);  
 
 // fetch escorts
 app.use("/escorts", fetchEscortsRoute);  

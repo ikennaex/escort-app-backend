@@ -7,7 +7,7 @@ const EscortSchema = new Schema(
     email: { type: String, required: true, unique: true, index: true },
     password: { type: String, required: true, index: true, select: false },
     phoneNumber: { type: String, required: true, unique: true, index: true },
-    displayName: { type: String, required: true }, 
+    displayName: { type: String, required: true },
     country: { type: String, required: true },
     countryCode: { type: Number, required: true },
     state: { type: String, required: true },
@@ -37,12 +37,18 @@ const EscortSchema = new Schema(
     overnightOutcall: { type: Number },
     weekendOutcall: { type: Number },
     gallery: { type: [String] },
+    bankDetails: {
+      bankName: { type: String, required: false },
+      accountName: { type: String, required: false },
+      accountNumber: { type: String, required: false },
+    },
+    premium: { type: Boolean },
     verificationImage: { type: String },
     refreshToken: { type: String, select: false },
     otp: { type: String },
     otpExpires: { type: Date },
     isVerified: { type: Boolean, default: false }, // to track if email/phone is verified
-    registrationComplete: { type: Boolean, default: false },  // to track if all registration is complete
+    registrationComplete: { type: Boolean, default: false }, // to track if all registration is complete
     isActive: { type: Boolean, default: false }, // to track if the profile is active ie all details added
   },
   { timestamps: true }
