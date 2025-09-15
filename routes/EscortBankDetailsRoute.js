@@ -1,8 +1,8 @@
 const express = require('express');
-const { escortDetails } = require('../controllers/Escort/onboarding/EscortDetailsController');
 const { authToken } = require('../middleware/auth');
+const { postBankDetails } = require('../controllers/Escort/EscortBankDetailsContoller');
 const router = express.Router()
 
-router.put('/', authToken, escortDetails);
+router.patch('/', authToken, postBankDetails);
 
 module.exports = router 
