@@ -38,9 +38,9 @@ const EscortSchema = new Schema(
     weekendOutcall: { type: Number },
     gallery: { type: [String] },
     bankDetails: {
-      bankName: { type: String, required: false },
-      accountName: { type: String, required: false },
-      accountNumber: { type: String, required: false },
+      bankName: { type: String, required: false, select: false},
+      accountName: { type: String, required: false, select: false },
+      accountNumber: { type: String, required: false, select: false },
     },
     premium: { type: Boolean },
     verificationImage: { type: String },

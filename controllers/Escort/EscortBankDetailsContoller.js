@@ -24,7 +24,21 @@ const postBankDetails = async (req, res) => {
 };
 
 const getBankDetails = async (req, res) => {
+  try {
+    const id = req.user.id;
 
+    // return bankDetails field
+    const escort = await EscortModel.findById(id).select("bankDetails");
+
+    if (!escort) {
+      return res.status(404).json({ message: "Escort not found" });
+    }
+
+    res.status(200).json(escort.bankDetails);
+  } catch (err) {
+    console.error("Error fetching bank details:", err);
+    res.status(500).json({ message: "Error fetching bank details" });
+  }
 }
 
-module.exports = {postBankDetails}
+module.exports = {postBankDetails, getBankDetails}

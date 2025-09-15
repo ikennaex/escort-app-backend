@@ -51,7 +51,7 @@ app.use("/escortverification", escortVerificationRoute);
 
 // edit route for escort
 app.use("/escorts/edit", editEscortProfileRoute);  
-app.use("/escorts/edit/bankdetails", escortBankDetailsRoute);  
+app.use("/escorts/bankdetails", escortBankDetailsRoute);  
 
 // fetch escorts
 app.use("/escorts", fetchEscortsRoute);  
