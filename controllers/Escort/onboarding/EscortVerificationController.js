@@ -23,9 +23,9 @@ const escortVerificationImage = async (req, res) => {
       "oscrovilla/verification"
     );
 
-    const escortDoc = EscortModel.findByIdAndUpdate(
+    const escortDoc = await EscortModel.findByIdAndUpdate(
       req.user.id,
-      { verificationImg: result.secure_url },
+      { verificationImg: result.secure_url, registrationComplete: true },
       { new: true, runValidators: true }
     );
 
@@ -34,7 +34,7 @@ const escortVerificationImage = async (req, res) => {
     }
 
     res.status(201).json({
-      message: "Verification image uploaded successfully",
+      message: "Verification image uploaded successfully, registration complete",
       verificationImg: escortDoc.verificationImg,
     });
   } catch (err) {
