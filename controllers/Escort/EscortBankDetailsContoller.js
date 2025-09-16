@@ -3,7 +3,7 @@ const EscortModel = require("../../models/Escort");
 const postBankDetails = async (req, res) => {
   try {
     const id = req.user.id;
-    const bankDetails = req.body;
+    const bankDetails = req.body;  
 
     const escortDoc = await EscortModel.findByIdAndUpdate(
       id,
