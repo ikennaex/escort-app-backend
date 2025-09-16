@@ -41,7 +41,7 @@ const getEscortsById = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const escortDoc = await EscortModel.findById(id);
+    const escortDoc = await EscortModel.findOne({ _id: id, active: true });
 
     if (!escortDoc) {
       return res.status(404).json({ message: "Escort not found" });
