@@ -7,7 +7,7 @@ const postBankDetails = async (req, res) => {
 
     const escortDoc = await EscortModel.findByIdAndUpdate(
       id,
-      { $set: bankDetails },
+      { $set: {bankDetails} },
       { new: true, runValidators: true }
     );
 
