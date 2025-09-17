@@ -16,6 +16,7 @@ const fetchEscortsRoute = require("./routes/FetchEscortsRoute");
 const editEscortProfileRoute = require("./routes/EditEscortProfileRoute");
 const escortBankDetailsRoute = require("./routes/EscortBankDetailsRoute");
 const adminGetUsersRoute = require("./routes/Admin/AdminGetUsersRoute");
+const adminApproveEscortRoute = require("./routes/Admin/AdminApproveEscortRoute");
 
 require('dotenv').config();
 
@@ -59,6 +60,7 @@ app.use("/escorts", fetchEscortsRoute);
 
 //admin
 app.use("/admin", adminGetUsersRoute); 
+app.use("/admin", adminApproveEscortRoute); 
 
 
 // run server
