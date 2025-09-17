@@ -25,7 +25,7 @@ const escortVerificationImage = async (req, res) => {
 
     const escortDoc = await EscortModel.findByIdAndUpdate(
       req.user.id,
-      { verificationImg: result.secure_url, registrationComplete: true },
+      { verificationImage: result.secure_url, registrationComplete: true },
       { new: true, runValidators: true }
     );
 

@@ -43,7 +43,7 @@ const EscortSchema = new Schema(
       accountNumber: { type: String, required: false, select: false },
     },
     premium: { type: Boolean },
-    verificationImage: { type: String },
+    verificationImage: { type: String, select:false },
     refreshToken: { type: String, select: false },
     otp: { type: String },
     otpExpires: { type: Date },
