@@ -21,7 +21,9 @@ const getEscorts = async (req, res) => {
       filter.name = { $regex: req.query.name, $options: "i" };
     }
 
-    const escortDoc = await EscortModel.find({ isActive: true }).skip(skip).limit(limit);
+    const escortDoc = await EscortModel.find({ isActive: true })
+      .skip(skip)
+      .limit(limit);
 
     // get total count (for frontend to know how many pages exist)
     const total = await EscortModel.countDocuments();
@@ -50,8 +52,71 @@ const getEscortsById = async (req, res) => {
     res.status(200).json(escortDoc);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Error getting escort details", err: err.message });
+    res
+      .status(500)
+      .json({ message: "Error getting escort details", err: err.message });
   }
 };
 
-module.exports = { getEscorts, getEscortsById };
+// fetch filtered escorts
+const filteredEscort = async (req, res) => {
+  try {
+    const filters = req.query;
+    const query = {};
+
+    if (filters.displayName) {
+      query.displayName = { $regex: filters.displayName, $options: "i" }; // case-insensitive search
+    }
+    if (filters.minAge && filters.maxAge) {
+      const today = new Date();
+
+      const minDOB = new Date(
+        today.getFullYear() - filters.maxAge,
+        today.getMonth(),
+        today.getDate()
+      );
+
+      console.log(minDOB)
+
+      const maxDOB = new Date(
+        today.getFullYear() - filters.minAge,
+        today.getMonth(),
+        today.getDate()
+      );
+
+      query.dob = { $gte: minDOB, $lte: maxDOB };
+    }
+    if (filters.country) query.country = filters.country;
+    if (filters.state) query.state = filters.state;
+    if (filters.city) query.city = filters.city;
+    if (filters.gender) query.gender = filters.gender;
+    if (filters.age) query.age = Number(filters.age);
+    if (filters.ethnicity) query.ethnicity = filters.ethnicity;
+    if (filters.bustSize) query.bustSize = filters.bustSize;
+    if (filters.bodyBuild) query.bodyBuild = filters.bodyBuild;
+    if (filters.looks) query.looks = filters.looks;
+    if (filters.sexualOrientation)
+      query.sexualOrientation = filters.sexualOrientation;
+    if (filters.availability) query.availability = filters.availability;
+    if (filters.smoker) query.smoker = filters.smoker;
+
+    // Services (must include ALL selected)
+    if (filters.services) {
+      const services = Array.isArray(filters.services)
+        ? filters.services
+        : [filters.services];
+      query.services = { $all: services };
+    }
+
+    // only active profile should be returned
+    query.isActive = true;
+
+    const escortsDoc = await EscortModel.find(query);
+    res.status(200).json(escortsDoc);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Error fetching escorts" });
+  }
+};
+
+module.exports = { getEscorts, getEscortsById, filteredEscort };
