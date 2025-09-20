@@ -22,6 +22,7 @@ const getEscorts = async (req, res) => {
     }
 
     const escortDoc = await EscortModel.find({ isActive: true })
+      .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit);
 
@@ -76,7 +77,7 @@ const filteredEscort = async (req, res) => {
         today.getDate()
       );
 
-      console.log(minDOB)
+      console.log(minDOB);
 
       const maxDOB = new Date(
         today.getFullYear() - filters.minAge,
@@ -111,7 +112,7 @@ const filteredEscort = async (req, res) => {
     // only active profile should be returned
     query.isActive = true;
 
-    const escortsDoc = await EscortModel.find(query);
+    const escortsDoc = await EscortModel.find(query).sort({ createdAt: -1 });
     res.status(200).json(escortsDoc);
   } catch (err) {
     console.error(err);
