@@ -12,6 +12,7 @@ const escortServicesRoute = require("./routes/EscortServicesRoute");
 const escortRatesRoute = require("./routes/EscortRatesRoute");
 const escortGalleryRoute = require("./routes/EscortGalleryRoute");
 const escortVerificationRoute = require("./routes/EscortVerificationRoute");
+const getRates = require("./routes/RatesRoute");
 const fetchEscortsRoute = require("./routes/FetchEscortsRoute");
 const editEscortProfileRoute = require("./routes/EditEscortProfileRoute");
 const escortBankDetailsRoute = require("./routes/EscortBankDetailsRoute");
@@ -57,6 +58,9 @@ app.use("/escorts/bankdetails", escortBankDetailsRoute);
 
 // fetch escorts
 app.use("/escorts", fetchEscortsRoute); 
+
+// get rates to boost profile 
+app.use("/escorts", getRates); 
 
 //admin
 app.use("/admin", adminGetUsersRoute); 
