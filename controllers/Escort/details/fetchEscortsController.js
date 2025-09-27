@@ -1,4 +1,5 @@
 const EscortModel = require("../../../models/Escort");
+const SubscriptionModel = require("../../../models/Subscription");
 
 const getEscorts = async (req, res) => {
   try {
@@ -41,20 +42,24 @@ const getEscorts = async (req, res) => {
 };
 
 const getPremiumEscorts = async (req, res) => {
-      try {
+  try {
     // get page and limit from query params (?page=1&limit=30)
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 30;
 
     const skip = (page - 1) * limit;
 
-    const escortDoc = await EscortModel.find({ isActive: true, premium:true })
-      .sort({ createdAt: -1 })
+    const escortDoc = await SubscriptionModel.find({ status: "active" })
+      .populate("user")
+      .sort({ endDate: -1 })
       .skip(skip)
       .limit(limit);
 
     // get total count (for frontend to know how many pages exist)
-    const total = await EscortModel.countDocuments({ isActive: true, premium: true });
+    const total = await EscortModel.countDocuments({
+      isActive: true,
+      premium: true,
+    });
     res.status(200).json({
       escortDoc,
       page,
@@ -65,7 +70,7 @@ const getPremiumEscorts = async (req, res) => {
     console.error("Error fetching escorts:", err);
     res.status(500).json({ message: "Failed to fetch escorts" });
   }
-}
+};
 
 const getEscortsById = async (req, res) => {
   const { id } = req.params;
@@ -147,4 +152,9 @@ const filteredEscort = async (req, res) => {
   }
 };
 
-module.exports = { getEscorts, getEscortsById, filteredEscort, getPremiumEscorts };
+module.exports = {
+  getEscorts,
+  getEscortsById,
+  filteredEscort,
+  getPremiumEscorts,
+};

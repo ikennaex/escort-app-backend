@@ -12,14 +12,19 @@ const escortServicesRoute = require("./routes/EscortServicesRoute");
 const escortRatesRoute = require("./routes/EscortRatesRoute");
 const escortGalleryRoute = require("./routes/EscortGalleryRoute");
 const escortVerificationRoute = require("./routes/EscortVerificationRoute");
-const getRates = require("./routes/RatesRoute");
+const getRatesRoute = require("./routes/RatesRoute");
 const fetchEscortsRoute = require("./routes/FetchEscortsRoute");
 const editEscortProfileRoute = require("./routes/EditEscortProfileRoute");
 const escortBankDetailsRoute = require("./routes/EscortBankDetailsRoute");
+const verifyPaymentRoute = require("./routes/VerifyPaymentRoute");
+const getSubscriptionDetailsRoute = require("./routes/SubscriptionDetailsRoute");
+
+// Admin routes
 const adminGetUsersRoute = require("./routes/Admin/AdminGetUsersRoute");
 const adminApproveEscortRoute = require("./routes/Admin/AdminApproveEscortRoute");
+const adminSubscriptionRoute = require("./routes/Admin/payments/AdminSubscriptionRoute");
 
-require('dotenv').config();
+require('dotenv').config(); 
 
 // database connection 
 connectDB() 
@@ -60,11 +65,18 @@ app.use("/escorts/bankdetails", escortBankDetailsRoute);
 app.use("/escorts", fetchEscortsRoute); 
 
 // get rates to boost profile 
-app.use("/escorts", getRates); 
+app.use("/escorts", getRatesRoute); 
+
+// verifying payments
+app.use("/escorts", verifyPaymentRoute); 
+
+// getting subscription details
+app.use("/escorts/premium", getSubscriptionDetailsRoute); 
 
 //admin
 app.use("/admin", adminGetUsersRoute); 
 app.use("/admin", adminApproveEscortRoute); 
+app.use("/admin", adminSubscriptionRoute); 
 
 
 // run server
