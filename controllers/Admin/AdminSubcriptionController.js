@@ -3,7 +3,7 @@ const SubscriptionModel = require("../../models/Subscription")
 
 const getSubcriptionDetails = async (req, res) => {
     try {
-        const subscriptionDoc = await SubscriptionModel.find().populate("user")
+        const subscriptionDoc = await SubscriptionModel.find().populate("user").sort({endDate: -1})
         return res.status(200).json(subscriptionDoc)
     } catch (err) {
         console.error(err)

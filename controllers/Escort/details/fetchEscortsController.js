@@ -49,7 +49,8 @@ const getPremiumEscorts = async (req, res) => {
 
     const skip = (page - 1) * limit;
 
-    const escortDoc = await SubscriptionModel.find({ status: "active" })
+    const now = new Date();
+    const escortDoc = await SubscriptionModel.find({ endDate: { $gt: now }, status: "active" })
       .populate("user")
       .sort({ endDate: -1 })
       .skip(skip)
@@ -68,7 +69,7 @@ const getPremiumEscorts = async (req, res) => {
     });
   } catch (err) {
     console.error("Error fetching escorts:", err);
-    res.status(500).json({ message: "Failed to fetch escorts" });
+    res.status(500).json({ message: "Failed to fetch premium escorts" });
   }
 };
 
