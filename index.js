@@ -19,7 +19,7 @@ const editEscortProfileRoute = require("./routes/EditEscortProfileRoute");
 const escortBankDetailsRoute = require("./routes/EscortBankDetailsRoute");
 const verifyPaymentRoute = require("./routes/VerifyPaymentRoute");
 const getSubscriptionDetailsRoute = require("./routes/SubscriptionDetailsRoute");
-const checkUsersExistsRoute = require("./routes/checkUsersExistsRoute");
+const checkUsersExistsRoute = require("./routes/CheckUsersExistsRoute");
 
 // Admin routes
 const adminGetUsersRoute = require("./routes/Admin/AdminGetUsersRoute");
