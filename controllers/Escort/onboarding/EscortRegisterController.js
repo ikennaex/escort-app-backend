@@ -20,14 +20,24 @@ const escortRegister = async (req, res) => {
       heading,
     } = req.body;
 
+    if (!username || !email || !phoneNumber || !password) {
+      return res
+        .status(400)
+        .json({ message: "All required fields must be provided" });
+    }
+
+    // 2. Normalize email & username
+    const normalizedEmail = email.toLowerCase().trim();
+    const normalizedUsername = username.trim();
+
     // check if username or email already exists
-    const usernameExists = await EscortModel.findOne({ username });
+    const usernameExists = await EscortModel.findOne({ username:normalizedUsername });
     if (usernameExists) {
       return res.status(400).json({ message: "Username already exists" });
     }
 
     // check if email already exists
-    const emailExists = await EscortModel.findOne({ email }); 
+    const emailExists = await EscortModel.findOne({ email: normalizedEmail });
     if (emailExists) {
       return res.status(400).json({ message: "Email already exists" });
     }
@@ -44,8 +54,8 @@ const escortRegister = async (req, res) => {
     const otp = crypto.randomInt(1000, 9999).toString();
 
     const userDoc = await EscortModel.create({
-      username,
-      email,
+      username:normalizedUsername,
+      email: normalizedEmail,
       phoneNumber,
       password: hashPass,
       displayName,
@@ -76,4 +86,3 @@ const escortRegister = async (req, res) => {
 };
 
 module.exports = { escortRegister };
-
