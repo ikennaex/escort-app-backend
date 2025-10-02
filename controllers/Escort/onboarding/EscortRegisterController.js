@@ -77,5 +77,3 @@ const escortRegister = async (req, res) => {
 
 module.exports = { escortRegister };
 
-// sH9lcfFJsuKB02B4
-// ikennaexcel_db_user

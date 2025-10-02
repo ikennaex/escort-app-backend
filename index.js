@@ -4,6 +4,7 @@ const port = process.env.PORT || 4000;
 const cors = require("cors")
 const connectDB = require("./config/dbConfig");
 const cookieParser = require("cookie-parser");
+const startSubscriptionCron = require("./cron/subscriptionCron");
 const escortRegisterRoute = require("./routes/EscortRegisterRoute");
 const clientRegisterRoute = require("./routes/ClientRegisterRoute");
 const loginRoute = require("./routes/LoginRoute");
@@ -18,11 +19,16 @@ const editEscortProfileRoute = require("./routes/EditEscortProfileRoute");
 const escortBankDetailsRoute = require("./routes/EscortBankDetailsRoute");
 const verifyPaymentRoute = require("./routes/VerifyPaymentRoute");
 const getSubscriptionDetailsRoute = require("./routes/SubscriptionDetailsRoute");
+const checkUsersExistsRoute = require("./routes/checkUsersExistsRoute");
 
 // Admin routes
 const adminGetUsersRoute = require("./routes/Admin/AdminGetUsersRoute");
 const adminApproveEscortRoute = require("./routes/Admin/AdminApproveEscortRoute");
 const adminSubscriptionRoute = require("./routes/Admin/payments/AdminSubscriptionRoute");
+const adminLoginRoute = require("./routes/Admin/AdminLoginRoute");
+
+// Subcription Cron Job 
+startSubscriptionCron()
 
 require('dotenv').config(); 
 
@@ -70,6 +76,9 @@ app.use("/escorts", getRatesRoute);
 // verifying payments
 app.use("/escorts", verifyPaymentRoute); 
 
+// check if user exists
+app.use("/user", checkUsersExistsRoute);
+
 // getting subscription details
 app.use("/escorts/premium", getSubscriptionDetailsRoute); 
 
@@ -77,7 +86,7 @@ app.use("/escorts/premium", getSubscriptionDetailsRoute);
 app.use("/admin", adminGetUsersRoute); 
 app.use("/admin", adminApproveEscortRoute); 
 app.use("/admin", adminSubscriptionRoute); 
-
+app.use("/admin", adminLoginRoute); 
 
 // run server
 app.listen(port, () => {

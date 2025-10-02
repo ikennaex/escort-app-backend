@@ -1,31 +1,29 @@
 const jwt = require("jsonwebtoken");
-const EscortModel = require("../models/Escort");
+const AdminModel = require("../../models/Admin");
 
-const refreshTokenHandler = async (req, res) => {
+const adminRefreshTokenHandler = async (req, res) => {
   try {
-    const token = req.cookies.refreshToken;
+    const token = req.cookies.adminRefreshToken;
     if (!token) return res.status(401).json({ message: "No refresh token" });
 
     const decoded = jwt.verify(token, process.env.JWT_REFRESH_SECRET);
-    const user = await EscortModel.findById(decoded.id).select("+refreshToken");
+    const admin = await AdminModel.findById(decoded.id).select("+refreshToken");
 
-    if (!user || user.refreshToken !== token) {
+    if (!admin || admin.refreshToken !== token) {
       return res.status(403).json({ message: "Refresh token mismatch" }); 
     }
 
     const newAccessToken = jwt.sign(
-      { id: user._id, email: user.email },
+      { id: admin._id, email: admin.email, userType: "Admin" },
       process.env.JWT_ACCESS_SECRET,
       { expiresIn: "15m" }
     );
 
-    res.json({ accessToken: newAccessToken });
+    res.json({ adminAccessToken: newAccessToken });
   } catch (err) {
     console.error("Refresh error:", err);
     res.status(403).json({ message: "Invalid or expired refresh token" });
   }
 };
 
-
-
-module.exports ={refreshTokenHandler}
+module.exports ={adminRefreshTokenHandler}
