@@ -37,6 +37,7 @@ const login = async (req, res) => {
   );
 
   // Save refresh token in DB
+  user.lastLogin = new Date();
   user.refreshToken = refreshToken; // if user is escort saves in escort model, if user is client saves in client model
   await user.save();
 
@@ -53,7 +54,7 @@ const login = async (req, res) => {
     _id: user._id,
     name: user.name,
     email: user.email,
-    role: user.role, 
+    role: user.role,
     createdAt: user.createdAt,
     updatedAt: user.updatedAt,
   };
@@ -70,11 +71,23 @@ const logout = async (req, res) => {
   try {
     const token = req.cookies.refreshToken;
     if (token) {
-      const decoded = jwt.verify(token, process.env.JWT_REFRESH_SECRET);
-      const user = await UserModel.findById(decoded.id);
-      if (user) {
-        user.refreshToken = null; // clear from DB
-        await user.save();
+      try {
+        const decoded = jwt.verify(token, process.env.JWT_REFRESH_SECRET);
+
+        let user = await EscortModel.findById(decoded.id);
+        if (!user) {
+          user = await ClientModel.findById(decoded.id);
+        }
+
+        if (user) {
+          user.refreshToken = null; // clear refresh token from DB
+          await user.save();
+        }
+      } catch (err) {
+        console.warn(
+          "Invalid or expired refresh token during logout:",
+          err.message
+        );
       }
     }
 

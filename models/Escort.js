@@ -50,6 +50,7 @@ const EscortSchema = new Schema(
     isVerified: { type: Boolean, default: false }, // to track if email/phone is verified
     registrationComplete: { type: Boolean, default: false }, // to track if all registration is complete
     isActive: { type: Boolean, default: false }, // to track if the profile is active ie all details added
+    lastLogin: { type: Date, default: null },
   },
   { timestamps: true }
 );
