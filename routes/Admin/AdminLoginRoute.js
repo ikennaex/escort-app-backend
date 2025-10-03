@@ -7,7 +7,7 @@ const router = express.Router()
 
 // router.post('/register', adminRegister);
 router.post('/login', adminLogin);
-router.post('/refresh', adminAuth, adminRefreshTokenHandler);
+router.post('/refresh', adminRefreshTokenHandler);
 
 router.get('/profile', adminAuth, getAdminProfile);
 
