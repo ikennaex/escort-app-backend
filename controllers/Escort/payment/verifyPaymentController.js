@@ -47,6 +47,8 @@ const verifyPayment = async (req, res) => {
         amount,
       });
 
+      const escort = await EscortModel.findByIdAndUpdate(id, { premium: true }, { new: true });
+
       return res.status(200).json({
         success: true,
         message: "Payment verified successfully",

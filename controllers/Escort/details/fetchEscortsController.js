@@ -52,7 +52,7 @@ const getPremiumEscorts = async (req, res) => {
     const now = new Date();
     const escortDoc = await SubscriptionModel.find({ endDate: { $gt: now }, status: "active" })
       .populate("user")
-      .sort({ endDate: -1 })
+      .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit);
 
