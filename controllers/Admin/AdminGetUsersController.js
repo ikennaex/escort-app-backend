@@ -14,7 +14,7 @@ const getAllEscorts = async (req, res) => {
 const getEscortsById = async (req, res) => {
   const id = req.params.id
   try {
-    const escortDoc = await EscortModel.findById(id).select("+verificationImg bankDetails");
+    const escortDoc = await EscortModel.findById(id).select("+verificationImage +bankDetails");
     res.status(200).json(escortDoc);
   } catch (err) {
     console.error("Error fetching escorts:", err);

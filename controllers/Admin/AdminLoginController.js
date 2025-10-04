@@ -58,6 +58,41 @@ const adminLogin = async (req, res) => {
   }
 };
 
+const adminLogout = async (req, res) => {
+  try {
+    const token = req.cookies.adminRefreshToken;
+    if (token) {
+      try {
+        const decoded = jwt.verify(token, process.env.JWT_REFRESH_SECRET);
+
+        const admin = await AdminModel.findById(decoded.id);
+
+        if (admin) {
+          admin.refreshToken = null; // clear refresh token from DB
+          await admin.save();
+        }
+      } catch (err) {
+        console.erorr(
+          "Invalid or expired refresh token during logout:",
+          err.message
+        );
+      }
+    }
+
+    res.clearCookie("adminRefreshToken", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "None",
+      path: "/",
+    });
+
+    res.json({ message: "Logged out successfully" });
+  } catch (err) {
+    console.error("Logout error:", err);
+    res.status(500).json({ message: "Logout failed" });
+  }
+};
+
 // const adminRegister = async (req, res) => {
 //     try {
 //         const {email, password} = req.body
@@ -71,4 +106,4 @@ const adminLogin = async (req, res) => {
 //     }
 // }
 
-module.exports = { adminLogin };
+module.exports = { adminLogin, adminLogout };

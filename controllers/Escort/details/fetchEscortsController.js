@@ -110,8 +110,6 @@ const filteredEscort = async (req, res) => {
         today.getDate()
       );
 
-      console.log(minDOB);
-
       const maxDOB = new Date(
         today.getFullYear() - filters.minAge,
         today.getMonth(),

@@ -11,6 +11,6 @@ router.post('/signin', login);
 router.post('/refresh', refreshTokenHandler);
 router.get('/profile', authToken, getLoggedUserProfile);
 
-router.post('/logout', logout);
+router.post('/logout', authToken, logout);
 
 module.exports = router
