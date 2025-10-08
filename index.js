@@ -43,6 +43,7 @@ app.use(cookieParser());
 app.use(
   cors({
     origin: [
+      "https://oscrovilla.com",
       "http://localhost:5173",
       "http://localhost:5174",
       "https://escort-app-0p4c.onrender.com"
