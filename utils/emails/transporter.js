@@ -1,12 +1,13 @@
 const nodemailer = require("nodemailer");
-require('dotenv').config();
+require("dotenv").config();
 
-// using mailer gun for now upgrade later
 const transporter = nodemailer.createTransport({
-    service: "Gmail", // remember to change this to mailgun or send grid - ikenna nevermind, using mailer send
+  host: "smtp.zoho.com",       // Zoho SMTP server
+  port: 465,                   // use 465 for secure SSL
+  secure: true,                // true for port 465, false for 587
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
+    user: process.env.EMAIL_USER, // your Zoho email (e.g. "you@yourdomain.com")
+    pass: process.env.EMAIL_PASS, // your Zoho app password
   },
 });
 

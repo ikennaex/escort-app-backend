@@ -20,6 +20,7 @@ const escortRates = async (req, res) => {
         shortimeOutcall,
         overnightOutcall,
         weekendOutcall,
+        registrationStep: "gallery"
       },
       { new: true, runValidators: true }
     );

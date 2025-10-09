@@ -20,6 +20,7 @@ const escortBankDetailsRoute = require("./routes/EscortBankDetailsRoute");
 const verifyPaymentRoute = require("./routes/VerifyPaymentRoute");
 const getSubscriptionDetailsRoute = require("./routes/SubscriptionDetailsRoute");
 const checkUsersExistsRoute = require("./routes/CheckUsersExistsRoute");
+const deleteProfileRoute = require("./routes/EscortDeleteProfileRoute");
 
 // Admin routes
 const adminGetUsersRoute = require("./routes/Admin/AdminGetUsersRoute");
@@ -63,6 +64,8 @@ app.use("/escortservices", escortServicesRoute);
 app.use("/escortrates", escortRatesRoute);
 app.use("/escortgallery", escortGalleryRoute);  
 app.use("/escortverification", escortVerificationRoute);  
+app.use("/escortdelete", deleteProfileRoute);
+
 
 // edit route for escort
 app.use("/escorts/edit", editEscortProfileRoute);  

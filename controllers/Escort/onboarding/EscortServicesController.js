@@ -5,7 +5,7 @@ const escortServices = async (req, res) => {
     const {services} = req.body
     const servicesDoc = await EscortModel.findByIdAndUpdate(
       req.user.id,
-      { $set: { services } },
+      { $set: { services, registrationStep: "rates" } },
       { new: true, runValidators: true } 
     );
 

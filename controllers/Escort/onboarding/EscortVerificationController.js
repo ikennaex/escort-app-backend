@@ -25,7 +25,13 @@ const escortVerificationImage = async (req, res) => {
 
     const escortDoc = await EscortModel.findByIdAndUpdate(
       req.user.id,
-      { verificationImage: result.secure_url, registrationComplete: true },
+      {
+        $set: {
+          verificationImage: result.secure_url,
+          registrationComplete: true,
+          registrationStep: null,
+        },
+      },
       { new: true, runValidators: true }
     );
 
@@ -34,7 +40,8 @@ const escortVerificationImage = async (req, res) => {
     }
 
     res.status(201).json({
-      message: "Verification image uploaded successfully, registration complete",
+      message:
+        "Verification image uploaded successfully, registration complete",
       verificationImg: escortDoc.verificationImg,
     });
   } catch (err) {

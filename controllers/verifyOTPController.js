@@ -17,6 +17,7 @@ const verifyEscortOtp = async (req, res) => {
     }
 
     // Update escort
+    escort.registrationStep = "additionalDetails";
     escort.isVerified = true;
     escort.otp = undefined;
     escort.otpExpires = undefined;

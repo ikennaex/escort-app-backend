@@ -32,6 +32,7 @@ const escortDetails = async (req, res) => {
       sexualOrientation,
       incallAvailable,
       outcallAvailable,
+      registrationStep: "services" // update registration step
     },{ new: true, runValidators: true });
 
     res.status(201).json({ message: "Details added successfully", detailsDoc });
