@@ -48,9 +48,6 @@ const deleteGalleryImage = async (req, res) => {
       ? publicId
       : `oscrovilla/${publicId}`;
 
-    console.log("Public ID to delete:", publicId);
-    console.log("Full Public ID to delete:", fullPublicId);
-
     // Delete image from Cloudinary
     await cloudinary.uploader.destroy(fullPublicId);
 

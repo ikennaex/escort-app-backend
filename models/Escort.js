@@ -52,7 +52,8 @@ const EscortSchema = new Schema(
     isActive: { type: Boolean, default: false }, // to track if the profile is active ie all details added
     lastLogin: { type: Date, default: null },
     views: { type: Number, default: 0 },
-    registrationStep: { type: String, default: "additionalDetails" }
+    registrationStep: { type: String, default: "additionalDetails" },
+    isBlacklisted: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
