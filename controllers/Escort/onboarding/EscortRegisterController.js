@@ -53,6 +53,8 @@ const escortRegister = async (req, res) => {
     // generate OTP (4-digit code)
     const otp = crypto.randomInt(1000, 9999).toString();
 
+    await sendVerificationMail(email, otp, username);
+
     const userDoc = await EscortModel.create({
       username:normalizedUsername,
       email: normalizedEmail,
@@ -70,8 +72,6 @@ const escortRegister = async (req, res) => {
       otpExpires: Date.now() + 20 * 60 * 1000, // 20 minutes
       isVerified: false,
     });
-
-    await sendVerificationMail(email, otp, username);
 
     return res.status(201).json({
       message:
