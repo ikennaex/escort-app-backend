@@ -18,6 +18,7 @@ const fetchEscortsRoute = require("./routes/FetchEscortsRoute");
 const editEscortProfileRoute = require("./routes/EditEscortProfileRoute");
 const escortBankDetailsRoute = require("./routes/EscortBankDetailsRoute");
 const verifyPaymentRoute = require("./routes/VerifyPaymentRoute");
+const escortPremiumReceiptRoute = require("./routes/EscortPremiumReceiptsRoute");
 const getSubscriptionDetailsRoute = require("./routes/SubscriptionDetailsRoute");
 const checkUsersExistsRoute = require("./routes/CheckUsersExistsRoute");
 const deleteProfileRoute = require("./routes/EscortDeleteProfileRoute");
@@ -30,6 +31,8 @@ const adminSubscriptionRoute = require("./routes/Admin/payments/AdminSubscriptio
 const adminLoginRoute = require("./routes/Admin/AdminLoginRoute");
 const adminReportsRoute = require("./routes/Admin/AdminReportsRoute");
 const adminBlacklistRoute = require("./routes/Admin/AdminBlacklistRoute");
+const adminPremiumReceiptsRoute = require("./routes/Admin/payments/AdminPremiumReceiptsRoute");
+const adminApprovePaymentRoute = require("./routes/Admin/payments/AdminApprovePaymentRoute");
 
 // Subcription Cron Job 
 startSubscriptionCron()
@@ -83,6 +86,9 @@ app.use("/escorts", getRatesRoute);
 // verifying payments
 app.use("/escorts", verifyPaymentRoute); 
 
+// payment receipts
+app.use("/escorts", escortPremiumReceiptRoute); 
+
 // check if user exists
 app.use("/user", checkUsersExistsRoute);
 
@@ -99,6 +105,8 @@ app.use("/admin", adminSubscriptionRoute);
 app.use("/admin", adminLoginRoute); 
 app.use("/admin", adminReportsRoute); 
 app.use("/admin", adminBlacklistRoute); 
+app.use("/admin", adminPremiumReceiptsRoute); 
+app.use("/admin", adminApprovePaymentRoute); 
 
 // run server
 app.listen(port, () => {

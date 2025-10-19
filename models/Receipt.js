@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const {Schema} = mongoose
 
-const SubscriptionSchema = new Schema(
+const ReceiptSchema = new Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
@@ -21,17 +21,12 @@ const SubscriptionSchema = new Schema(
       required: true,
     },
     startDate: {
-      type: Date, 
+      type: Date,
       default: Date.now,
     },
     endDate: {
       type: Date,
       required: true,
-    },
-    status: {
-      type: String,
-      enum: ["active", "expired", "cancelled"],
-      default: "active",
     },
     transactionRef: {
       type: String,
@@ -42,9 +37,22 @@ const SubscriptionSchema = new Schema(
       type: Number,
       required: true, // Amount paid in NGN
     },
+    paymentMethod: {
+      type: String,
+      required: true, 
+    },
+    status: {
+      type: String,
+      enum: ["pending", "approved", "rejected"],
+      default: "pending",
+    },
+    receipt: {
+        type: String,
+        required: true,
+    }
   },
   { timestamps: true }
 );
 
-const SubscriptionModel = mongoose.model("Subscription", SubscriptionSchema);
-module.exports = SubscriptionModel;
+const ReceiptModel = mongoose.model("Receipt", ReceiptSchema);
+module.exports = ReceiptModel;
