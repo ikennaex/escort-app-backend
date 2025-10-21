@@ -10,7 +10,7 @@ const sendPaymentMail = async ( amount, plan) => {
       html: `
         <h2>New Payment Request</h2>
         <p><strong>Plan:</strong> ${plan}</p>
-        <p><strong>Amount:</strong> ₦${Number(amount).toLocaleString()}</p>
+        <p><strong>Amount:</strong> ${amount >= 1000 ? "₦" : "$"}${Number(amount).toLocaleString()}</p>
         <br/>
         <p>A new payment receipt has been uploaded for review.</p>
         <p>Login to your admin dashboard to verify and approve the request.</p>

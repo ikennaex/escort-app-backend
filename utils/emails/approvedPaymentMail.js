@@ -11,7 +11,7 @@ const sendApprovedPaymentMail = async (to, username, plan, amount) => {
         <h2>Hi ${username},</h2>
         <p>We’re excited to inform you that your payment has been successfully verified!</p>
         <p><strong>Plan:</strong> ${plan}</p>
-        <p><strong>Amount:</strong> ₦${Number(amount).toLocaleString()}</p>
+        <p><strong>Amount:</strong> ${amount >= 1000 ? "₦" : "$"}${Number(amount).toLocaleString()}</p>
         <br/>
         <p>Your premium plan is now active. You can start enjoying all premium features immediately.</p>
         <br/>
