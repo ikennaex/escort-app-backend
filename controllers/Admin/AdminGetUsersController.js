@@ -36,7 +36,7 @@ const getAllVerifiedEscorts = async (req, res) => {
 
 const getAllUnverifiedEscorts = async (req, res) => {
   try {
-    const escortDoc = await EscortModel.find({ isActive: false });
+    const escortDoc = await EscortModel.find({ isActive: false }).sort({ createdAt: -1 });;
     res.status(200).json(escortDoc);
   } catch (err) {
     console.error("Error fetching escorts:", err);

@@ -1,5 +1,6 @@
 const ReceiptModel = require("../../models/Receipt");
 const SubscriptionModel = require("../../models/Subscription");
+const EscortModel = require("../../models/Escort");
 const sendApprovedPaymentMail = require("../../utils/emails/approvedPaymentMail");
 const sendRejectedPaymentMail = require("../../utils/emails/rejectedPaymentMail");
 
@@ -20,6 +21,10 @@ const approvePayment = async (req, res) => {
       amount: receipt.amount,
       paymentMethod: receipt.paymentMethod,
     });
+
+    const Escort = await EscortModel.findById(receipt.user);
+    Escort.premium = true;
+    await Escort.save();
 
     receipt.status = "approved";
     await receipt.save();
