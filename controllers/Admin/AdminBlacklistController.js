@@ -44,4 +44,19 @@ const getBlacklistedEscorts = async (req, res) => {
   }
 }
 
-module.exports = { blacklistEscort, getBlacklistedEscorts };
+const getBlacklistedEscortsById = async (req, res) => {
+  const { id } = req.params;
+  console.log(id);
+  console.log("Hellow world");
+  try {
+    const blacklistedEscort = await BlacklistModel.find({ escort: id }).populate("escort", "name city state username verificationImage");
+    res.status(200).json({ blacklistedEscort });
+  } catch (err) {
+    console.error("Error fetching blacklists:", err);
+    res
+      .status(500)
+      .json({ message: "Failed to fetch blacklists", error: err.message });
+  }
+}
+
+module.exports = { blacklistEscort, getBlacklistedEscorts, getBlacklistedEscortsById };

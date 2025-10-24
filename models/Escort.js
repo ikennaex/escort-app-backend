@@ -54,6 +54,7 @@ const EscortSchema = new Schema(
     views: { type: Number, default: 0 },
     registrationStep: { type: String, default: "additionalDetails" },
     isBlacklisted: { type: Boolean, default: false },
+    views: { type: Number, default: 0 },
   },
   { timestamps: true }
 );

@@ -23,6 +23,7 @@ const getSubscriptionDetailsRoute = require("./routes/SubscriptionDetailsRoute")
 const checkUsersExistsRoute = require("./routes/CheckUsersExistsRoute");
 const deleteProfileRoute = require("./routes/EscortDeleteProfileRoute");
 const escortPostReport = require("./routes/EscortReportRoute")
+const escortViewCounterRoute = require("./routes/EscortViewCounterRoute")
 
 // Admin routes
 const adminGetUsersRoute = require("./routes/Admin/AdminGetUsersRoute");
@@ -97,6 +98,9 @@ app.use("/escorts/premium", getSubscriptionDetailsRoute);
 
 // report escort
 app.use("/report", escortPostReport);
+  
+// view counter
+app.use("/view", escortViewCounterRoute);
 
 //admin
 app.use("/admin", adminGetUsersRoute); 

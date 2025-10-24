@@ -10,7 +10,7 @@ const BlacklistSchema = new Schema(
     },
     reason: { type: String, required: true},
     details: { type: String, required: true},
-    images: { type: [String] }
+    proof: { type: [String] }
   },
   { timestamps: true }
 );
