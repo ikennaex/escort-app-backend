@@ -10,6 +10,6 @@ router.get('/getunverifiedescorts', adminAuth, getAllUnverifiedEscorts);
 router.get('/getunverifiedescorts/:id', adminAuth, getAllUnverifiedEscortsById);
 router.get('/getpremiumescorts', adminAuth, getPremiumEscorts);
 router.get('/getallclients', adminAuth, getAllClients); 
-router.get('/getEscortCount', adminAuth, getEscortCount); 
+router.get('/getescortcount', adminAuth, getEscortCount); 
 
 module.exports = router 

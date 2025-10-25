@@ -3,7 +3,7 @@ const EscortModel = require("../../models/Escort");
 
 const getAllEscorts = async (req, res) => {
   try {
-    const escortDoc = await EscortModel.find();
+    const escortDoc = await EscortModel.find().sort({ createdAt: -1 });
     res.status(200).json(escortDoc);
   } catch (err) {
     console.error("Error fetching escorts:", err);
@@ -78,7 +78,7 @@ const getAllClients = async (req, res) => {
   }
 };
 
-const getEscortCount = async () => {
+const getEscortCount = async (req, res) => {
   try {
     const now = new Date();
     const last24Hours = new Date(now - 24 * 60 * 60 * 1000);
