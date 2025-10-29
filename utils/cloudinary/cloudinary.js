@@ -11,7 +11,7 @@ const uploadToCloudinary = async (fileBuffer, folder = "uploads") => {
           {
             overlay: {
               font_family: "Arial",
-              font_size: 80,
+              font_size: 100,
               font_weight: "bold",
               text: "www.oscrovilla.com",
             },
