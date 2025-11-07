@@ -32,4 +32,25 @@ const upload = multer({
   },
 });
 
-module.exports = upload;
+// Middleware to wrap multer and handle errors
+const handleUpload = (fieldName, maxFiles = 10) => (req, res, next) => {
+  upload.array(fieldName, maxFiles)(req, res, (err) => {
+    if (err) {
+      console.error("Multer error:", err.message);
+      return res.status(400).json({ message: err.message }); // clear error for client
+    }
+
+    // Optional: log files for debugging mobile uploads
+    console.log("Files received:", req.files.map(f => ({
+      originalName: f.originalname,
+      mimetype: f.mimetype,
+      size: f.size
+    })));
+
+    next(); // proceed to controller if no errors
+  });
+};
+
+module.exports = {handleUpload, upload};
+
+// module.exports = upload;
