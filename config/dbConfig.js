@@ -1,8 +1,26 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 
-const connectDB = () => {
-    mongoose.connect(process.env.MONGO_URI).then(() => console.log('Database connected'))
-}
+let isConnected = false;
 
+const connectDB = async () => {
+  if (isConnected) {
+    console.log("Already connected to database");
+    return;
+  }
 
-module.exports = connectDB
+  try {
+    await mongoose.connect(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      // maxPoolSize can help with limiting connections
+      maxPoolSize: 30,
+    });
+
+    isConnected = true;
+    console.log("Database connected");
+  } catch (err) {
+    console.error("Database connection error:", err);
+  }
+};
+
+module.exports = connectDB;
