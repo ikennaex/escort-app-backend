@@ -75,7 +75,8 @@ const escortRegister = async (req, res) => {
 
     return res.status(201).json({
       message:
-        "User registered successfully check your email to verify your account",
+        // "User registered successfully check your email to verify your account",
+        "User registered successfully",
     });
   } catch (error) {
     console.error("Error during registration:", error);
