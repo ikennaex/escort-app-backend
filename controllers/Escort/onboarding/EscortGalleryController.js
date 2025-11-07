@@ -34,7 +34,7 @@ const escortGallery = async (req, res) => {
     });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Gallery Upload Failed" });
+    res.status(500).json({ message: "Gallery Upload Failed, please try again" });
   }
 };
 
