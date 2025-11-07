@@ -42,7 +42,7 @@ const escortVerificationImage = async (req, res) => {
     res.status(201).json({
       message:
         "Verification image uploaded successfully, registration complete",
-      verificationImg: escortDoc.verificationImg,
+      verificationImg: escortDoc.verificationImage,
     });
   } catch (err) {
     console.error(err);
