@@ -1,5 +1,6 @@
 const EscortModel = require("../../../models/Escort");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const sendVerificationMail = require("../../../utils/emails/verificationEmail");
 
@@ -73,11 +74,42 @@ const escortRegister = async (req, res) => {
       isVerified: true,
     });
 
+            // Create tokens
+        const accessToken = jwt.sign(
+          { id: userDoc._id, userType: "escort" },
+          process.env.JWT_ACCESS_SECRET,
+          { expiresIn: "15m" }
+        );
+    
+        const refreshToken = jwt.sign(
+          { id: userDoc._id, userType: "escort" },
+          process.env.JWT_REFRESH_SECRET,
+          { expiresIn: "7d" }
+        );
+    
+        // // Save refresh token in DB
+        // escort.refreshToken = refreshToken;
+        // await escort.save();
+    
+        // Send refresh token in HttpOnly cookie
+        res.cookie("refreshToken", refreshToken, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+          sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+          path: "/",
+          maxAge: 7 * 24 * 60 * 60 * 1000,
+        });
+
+        userDoc.refreshToken =  refreshToken
+        await userDoc.save()
+
     return res.status(201).json({
       message:
         // "User registered successfully check your email to verify your account",
         "User registered successfully",
-    });
+        user: userDoc,
+        accessToken
+    },);
   } catch (error) {
     console.error("Error during registration:", error);
     return res
