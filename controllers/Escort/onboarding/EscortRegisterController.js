@@ -51,9 +51,9 @@ const escortRegister = async (req, res) => {
     const hashPass = await bcrypt.hash(password, 10);
 
     // generate OTP (4-digit code)
-    const otp = crypto.randomInt(1000, 9999).toString();
+    // const otp = crypto.randomInt(1000, 9999).toString();  // remove later
 
-    await sendVerificationMail(email, otp, username);
+    // await sendVerificationMail(email, otp, username); // remove later
 
     const userDoc = await EscortModel.create({
       username:normalizedUsername,
@@ -68,9 +68,9 @@ const escortRegister = async (req, res) => {
       dob,
       gender,
       heading,
-      otp,
-      otpExpires: Date.now() + 20 * 60 * 1000, // 20 minutes
-      isVerified: false,
+      // otp,
+      // otpExpires: Date.now() + 20 * 60 * 1000, // 20 minutes
+      isVerified: true,
     });
 
     return res.status(201).json({
