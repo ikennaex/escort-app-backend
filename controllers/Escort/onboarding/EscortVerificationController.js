@@ -46,7 +46,7 @@ const escortVerificationImage = async (req, res) => {
     });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Verification upload failed" });
+    res.status(500).json({ message: "Verification upload failed, try again" });
   }
 };
 
