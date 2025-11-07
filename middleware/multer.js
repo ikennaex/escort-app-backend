@@ -12,6 +12,7 @@ const allowedTypes = [
   "image/gif",
   "video/mp4",
   "video/quicktime",
+  "application/octet-stream"
 ];
 
 // Filter files by MIME type
@@ -28,7 +29,7 @@ const upload = multer({
   storage,
   fileFilter,
   limits: {
-    fileSize: 20 * 1024 * 1024, // 20 MB max per file
+    fileSize: 50 * 1024 * 1024, // 20 MB max per file
   },
 });
 
