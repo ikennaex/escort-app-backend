@@ -1,4 +1,4 @@
-const streamifier = require("streamifier");
+const streamifier = require("streamifier"); 
 const sharp = require("sharp"); // Add this
 const cloudinary = require("../../config/cloudinary");
 
