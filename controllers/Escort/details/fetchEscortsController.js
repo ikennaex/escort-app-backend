@@ -5,7 +5,7 @@ const getEscorts = async (req, res) => {
   try {
     // get page and limit from query params (?page=1&limit=10)
     const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 50; 
+    const limit = parseInt(req.query.limit) || 100; 
 
     const skip = (page - 1) * limit;
 
@@ -23,7 +23,7 @@ const getEscorts = async (req, res) => {
     }
 
     const escortDoc = await EscortModel.find({ isActive: true })
-      .sort({ createdAt: -1 })
+      .sort({ updatedAt: -1 })
       .skip(skip)
       .limit(limit);
 

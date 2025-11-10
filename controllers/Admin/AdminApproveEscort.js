@@ -35,7 +35,7 @@ const rejectEscort = async (req, res) => {
 
     res
       .status(200)
-      .json({ message: "Escort rejected successfully", escort: escortDoc });
+      .json({ message: "Escort rejected successfully", escort });
   } catch (err) {
     console.error("Error rejecting escort:", err);
     res.status(500).json({ message: "Error rejecting escort" });
