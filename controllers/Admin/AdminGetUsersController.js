@@ -36,13 +36,25 @@ const getAllVerifiedEscorts = async (req, res) => {
 
 const getAllUnverifiedEscorts = async (req, res) => {
   try {
-    const escortDoc = await EscortModel.find({ isActive: false }).sort({ createdAt: -1 });;
+    // get page and limit from query params (?page=1&limit=10)
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 100;
+    const skip = (page - 1) * limit;
+
+    const escortDoc = await EscortModel.find({ isActive: false })
+      .sort({
+        createdAt: -1,
+      })
+      .skip(skip)
+      .limit(limit);
+
     res.status(200).json(escortDoc);
   } catch (err) {
     console.error("Error fetching escorts:", err);
     res.status(500).json({ message: "Could not fetch escorts" });
   }
 };
+
 
 const getAllUnverifiedEscortsById = async (req, res) => {
   const id = req.params.id;
@@ -84,6 +96,8 @@ const getEscortCount = async (req, res) => {
     const last24Hours = new Date(now - 24 * 60 * 60 * 1000);
     const last7Days = new Date(now - 7 * 24 * 60 * 60 * 1000);
 
+    const escortsCount = await EscortModel.countDocuments();
+
     const escortsLast24Hours = await EscortModel.countDocuments({
       createdAt: { $gte: last24Hours },
     });
@@ -96,6 +110,7 @@ const getEscortCount = async (req, res) => {
       data: {
         escortsLast24Hours,
         escortsLast7Days,
+        escortsCount,
       },
     });
   } catch (err) {
@@ -103,6 +118,16 @@ const getEscortCount = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+// const getEscortsCount = async (req, res) => {
+//   try {
+//     const escortDoc = await EscortModel.countDocuments();
+//     res.status(200).json(escortDoc);
+//   } catch (err) {
+//     console.error("Error fetching escorts:", err);
+//     res.status(500).json({ message: "Could not fetch escorts" });
+//   }
+// };
 
 module.exports = {
   getAllEscorts,
