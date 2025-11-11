@@ -41,6 +41,8 @@ const getAllUnverifiedEscorts = async (req, res) => {
     const limit = parseInt(req.query.limit) || 100;
     const skip = (page - 1) * limit;
 
+    const total = await EscortModel.countDocuments({ isActive: false });
+
     const escortDoc = await EscortModel.find({ isActive: false })
       .sort({
         createdAt: -1,
@@ -48,13 +50,17 @@ const getAllUnverifiedEscorts = async (req, res) => {
       .skip(skip)
       .limit(limit);
 
-    res.status(200).json(escortDoc);
+    res.status(200).json({
+      total,
+      page,
+      limit,
+      escorts: escortDoc,
+    });
   } catch (err) {
     console.error("Error fetching escorts:", err);
     res.status(500).json({ message: "Could not fetch escorts" });
   }
 };
-
 
 const getAllUnverifiedEscortsById = async (req, res) => {
   const id = req.params.id;
