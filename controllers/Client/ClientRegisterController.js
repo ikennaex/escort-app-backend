@@ -1,5 +1,6 @@
 const ClientModel = require("../../models/Client");
 const bcrypt = require("bcrypt");
+const EscortModel = require("../../models/Escort");
 
 const clientRegister = async (req, res) => {
   try {
@@ -30,4 +31,4 @@ const clientRegister = async (req, res) => {
   }
 };
 
-module.exports = { clientRegister };
+module.exports = { clientRegister }; 

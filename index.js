@@ -5,6 +5,7 @@ const cors = require("cors")
 const connectDB = require("./config/dbConfig");
 const cookieParser = require("cookie-parser");
 const startSubscriptionCron = require("./cron/subscriptionCron");
+const startIncompleteRegistrationCron = require("./cron/incompleteRegistrationCron");
 const escortRegisterRoute = require("./routes/EscortRegisterRoute");
 const clientRegisterRoute = require("./routes/ClientRegisterRoute");
 const loginRoute = require("./routes/LoginRoute");
@@ -37,6 +38,9 @@ const adminApprovePaymentRoute = require("./routes/Admin/payments/AdminApprovePa
 
 // Subcription Cron Job 
 startSubscriptionCron()
+// delete incomplete profiles cron 
+startIncompleteRegistrationCron();
+
 
 require('dotenv').config(); 
 

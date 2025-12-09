@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const {Schema} = mongoose
+const { Schema } = mongoose;
 
 const SubscriptionSchema = new Schema(
   {
@@ -21,7 +21,7 @@ const SubscriptionSchema = new Schema(
       required: true,
     },
     startDate: {
-      type: Date, 
+      type: Date,
       default: Date.now,
     },
     endDate: {
@@ -32,6 +32,10 @@ const SubscriptionSchema = new Schema(
       type: String,
       enum: ["active", "expired", "cancelled"],
       default: "active",
+    },
+    cancelledAt: {
+      type: Date,
+      default: null,
     },
     transactionRef: {
       type: String,

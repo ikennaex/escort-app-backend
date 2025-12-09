@@ -38,12 +38,12 @@ const EscortSchema = new Schema(
     weekendOutcall: { type: Number },
     gallery: { type: [String] },
     bankDetails: {
-      bankName: { type: String, required: false, select: false},
+      bankName: { type: String, required: false, select: false },
       accountName: { type: String, required: false, select: false },
       accountNumber: { type: String, required: false, select: false },
     },
-    premium: { type: Boolean, default:false },
-    verificationImage: { type: String, select:false },
+    premium: { type: Boolean, default: false },
+    verificationImage: { type: String, select: false },
     refreshToken: { type: String, select: false },
     otp: { type: String },
     otpExpires: { type: Date },
@@ -55,6 +55,14 @@ const EscortSchema = new Schema(
     registrationStep: { type: String, default: "additionalDetails" },
     isBlacklisted: { type: Boolean, default: false },
     views: { type: Number, default: 0 },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
+    deletedAt: {
+      type: Date,
+      default: null,
+    },
   },
   { timestamps: true }
 );
